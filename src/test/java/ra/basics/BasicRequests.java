@@ -15,7 +15,7 @@ public class BasicRequests {
         get("https://api.zippopotam.us/IN/584122").
         then().
                 assertThat().statusCode(200).contentType("application/json").
-                log().body();
+                log().all();
 }
 
 @Test
@@ -28,6 +28,22 @@ public class BasicRequests {
             body("places[0]", hasEntry("place name","Lingasugur")).
             body("places.'place name'",hasItem("Lingasugur"));
 }
+
+    @Test
+    public void verifyHeaderValidations(){
+        given().when().get("https://api.zippopotam.us/IN/584122").
+                then().assertThat().header("charset","UTF-8").
+                header("Server",equalTo("cloudflare"));
+
+    }
+
+    @Test
+    public void verifygroovyParsingValidations(){
+    given().when().get("https://api.zippopotam.us/IN/570001").then()
+            .assertThat().
+            body("places.findAll { it.state = 'Karnataka' } .'place name'", hasItems("Iringere","K R Mohalla","Kabir Road", "K R Circle"));
+    }
+
 
 
 }

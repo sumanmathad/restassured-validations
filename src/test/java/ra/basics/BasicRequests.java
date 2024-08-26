@@ -14,8 +14,7 @@ public class BasicRequests {
         when().
         get("https://api.zippopotam.us/IN/584122").
         then().
-                assertThat().statusCode(200).contentType("application/json").
-                log().all();
+                assertThat().statusCode(200).contentType("application/json");
 }
 
 @Test
@@ -43,6 +42,23 @@ public class BasicRequests {
             .assertThat().
             body("places.findAll { it.state = 'Karnataka' } .'place name'", hasItems("Iringere","K R Mohalla","Kabir Road", "K R Circle"));
     }
+
+    @Test
+    public void verifyLogAll(){
+        given().
+                when().
+                get("https://api.zippopotam.us/IN/584122").
+                then().log().all();
+    }
+
+    @Test
+    public void verifyLogBody(){
+        given().
+                when().
+                get("https://api.zippopotam.us/IN/584122").
+                then().log().body();
+    }
+
 
 
 

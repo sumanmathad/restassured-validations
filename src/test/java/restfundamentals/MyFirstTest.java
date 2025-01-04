@@ -1,10 +1,12 @@
 package restfundamentals;
 
 import org.junit.jupiter.api.Test;
+import restfundamentals.config.VideoGameConfig;
+import restfundamentals.config.VideoGameEndpoints;
 
-import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.*;
 
-public class MyFirstTest {
+public class MyFirstTest extends VideoGameConfig {
 
     @Test
     public void myFirstTest(){
@@ -12,8 +14,18 @@ public class MyFirstTest {
         given().
                 log().all()
         .when()
-                .get("https://videogamedb.uk/api/videogame")
+                .get("/videogame")
         .then()
                 .log().all();
     }
+
+    @Test
+    public void myFirstTestWithEndpoint(){
+        get(VideoGameEndpoints.ALL_VIDEO_GAMES)
+                .then()
+                .log().all();
+
+    }
+
+
 }
